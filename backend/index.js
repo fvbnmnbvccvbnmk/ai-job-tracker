@@ -1,11 +1,11 @@
-const Fastify = require("fastify");
-const cors = require("@fastify/cors");
+const express = require("express");
+const cors = require("cors");
 
-const fastify = Fastify({ logger: true });
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-fastify.register(cors, { origin: true });
-
-// 🔹 SIMPLE JOB DATA
+// Jobs data
 const jobs = [
   {
     id: 1,
@@ -27,22 +27,18 @@ const jobs = [
   },
 ];
 
-// 🔹 HEALTH CHECK
-fastify.get("/", async () => {
-  return { status: "Backend running" };
+// Health check
+app.get("/", (req, res) => {
+  res.json({ status: "Backend running" });
 });
 
-// 🔹 JOBS API
-fastify.get("/jobs", async () => {
-  return jobs;
+// Jobs API
+app.get("/jobs", (req, res) => {
+  res.json(jobs);
 });
 
-// 🔹 START SERVER (RENDER SAFE)
+// Start server (Render safe)
 const PORT = process.env.PORT || 5000;
-
-fastify.listen({ port: PORT, host: "0.0.0.0" }, err => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
 });
