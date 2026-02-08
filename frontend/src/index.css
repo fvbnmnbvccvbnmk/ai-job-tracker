@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.hero-gradient {
+  background: linear-gradient(120deg, rgba(15, 70, 143, 0.9), rgba(88, 170, 146, 0.75));
+}
